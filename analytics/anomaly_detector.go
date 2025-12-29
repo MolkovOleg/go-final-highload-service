@@ -28,7 +28,7 @@ func (ad *AnomalyDetector) Add(value float64) bool {
 
 	isAnomaly := false
 	if len(ad.values) >= ad.windowSize {
-		mean, stdDev := ad.calculateStats()
+		mean, stdDev := ad.CalculateStats()
 		if stdDev > 0 {
 			zScore := math.Abs((value - mean) / stdDev)
 			isAnomaly = zScore > ad.threshold
@@ -43,7 +43,7 @@ func (ad *AnomalyDetector) Add(value float64) bool {
 	return isAnomaly
 }
 
-func (ad *AnomalyDetector) calculateStats() (mean, stdDev float64) {
+func (ad *AnomalyDetector) CalculateStats() (mean, stdDev float64) {
 	if len(ad.values) == 0 {
 		return 0.0, 0.0
 	}
@@ -68,7 +68,7 @@ func (ad *AnomalyDetector) calculateStats() (mean, stdDev float64) {
 func (ad *AnomalyDetector) GetStatus() (mean, stdDev float64, count int) {
 	ad.mu.RLock()
 	defer ad.mu.RUnlock()
-	mean, stdDev = ad.calculateStats()
+	mean, stdDev = ad.CalculateStats()
 	
 	return mean, stdDev, len(ad.values)
 }
