@@ -13,12 +13,12 @@ type AnomalyDetector struct {
 }
 
 // Constructor
-func NewAnomalyDetector(windowSize int, theshold float64) *AnomalyDetector {
+func NewAnomalyDetector(windowSize int, threshold float64) *AnomalyDetector {
 
 	return &AnomalyDetector{
 		windowSize: windowSize,
 		values:     make([]float64, 0, windowSize),
-		threshold:  theshold,
+		threshold:  threshold,
 	}
 }
 
